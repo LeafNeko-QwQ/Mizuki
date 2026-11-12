@@ -19,6 +19,7 @@ import "../styles/variables.styl";
 import "../styles/main.css";
 import "../styles/banner.css";
 import "../styles/transition.css";
+import "../styles/page-loading.css";
 import "../styles/widget-responsive.css";
 import "../styles/layout-responsive.css";
 import "../styles/mobile-navbar.css";
@@ -328,13 +329,31 @@ const bannerOffset =
 	}
 </style>
 
+<!-- 页面跳转加载过场：进入固定、等待不定、退出固定 -->
+<div
+	id="page-loading"
+	class="page-loading"
+	role="status"
+	aria-live="polite"
+	aria-hidden="true"
+>
+	<div class="page-loading__inner">
+		<div class="page-loading__spinner" aria-hidden="true"></div>
+		<p class="page-loading__text">{siteConfig.title}</p>
+	</div>
+</div>
+
 <script>
 	// Swup 页面过渡管理器 - 统一入口
 	// 所有功能已重构为模块化架构，详见 src/scripts/ 目录
 	import { initSwupManager } from "../scripts/swup-manager";
+	import { initPageLoadingOverlay } from "../scripts/page-loading-overlay";
 
 	// 初始化 Swup 管理器
 	initSwupManager();
+
+	// 挂载跳转过场（进入固定 → 等待加载 → 渲染完成后退出）
+	initPageLoadingOverlay();
 </script>
 
 <!-- 基于 Mizuki 原有交互，为超过阈值的代码块自动启用折叠 -->
