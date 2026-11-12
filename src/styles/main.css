@@ -5,6 +5,7 @@
 /* 导入追番页面样式 */
 @import "./anime.css";
 @import "./animation-enhancements.css";
+@import "./micro-motion.css";
 /* 导入渐变按钮样式 */
 @import "./gradient-buttons.css";
 /* 加密内容样式已移除，现在直接使用非加密文章的样式 */
