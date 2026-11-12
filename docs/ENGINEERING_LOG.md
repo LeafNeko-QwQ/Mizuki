@@ -81,6 +81,17 @@
 - **追加更正（同日）**：站点标题最终定为 **`LeafNekoの小窝`**，副标题 **`你可以在这逛逛`**，由用户明确指定，覆盖上面临时的 `LeafNeko` / `没实力喵事个fvv`。同时新增铁律第 6 条：只改用户点名的地方。
 - **日语部分保留（用户 2026-11-12 明确指示）**：首页大标题「わたしの部屋」、日文轮播副标题、TOC 假名标记等日文内容**属于本站设计的一部分，不得翻译或替换**。这一条对后续所有改动持续有效。
 
+### 仍属模板内容的位置（已定位，未改，等点名）
+
+| 位置 | 具体内容 |
+| --- | --- |
+| `src/config/announcementConfig.ts` | 公告正文 `ブログへようこそ！これはサンプルの告知です`（意为「欢迎来到博客，这是一条示例公告」），链接文字 `Learn More` |
+| `src/content/spec/about.md` | 关于页整页是主题功能的英文介绍（"This website is built with the Astro framework using the Mizuki theme…"） |
+| `src/content/spec/friends.md` | 0 字节空文件，友链页没有内容 |
+| `src/config/musicConfig.ts` | 音乐播放器走 meting 演示歌单（`id: 14164869977`），列表里是 22/7、Dazbee 等曲目 |
+| `src/config/siteConfig.ts` | `siteStartDate` 仍为 `2025-01-01`，右下角「运行天数」按此为基准 |
+| `src/config/siteConfig.ts` | `featurePages` 九项全开（番剧/日记/友链/项目/技能/时间线/相册/设备/AI 工具），页面里是演示数据 |
+
 ---
 
 ## 5. 变更记录
@@ -98,3 +109,6 @@
 | 2026-11-12 | 顶栏品牌区换成用户自己的：图标改为头像，文字改为站点标题。头像另存 96×96 版本到 `public/`（`navbarTitle.icon` 走 `url()` 解析，只认 `public` 目录，`src/assets` 里的图片拿不到） | `src/config/siteConfig.ts`、`public/assets/home/avatar.webp`（新增） | 只改 `navbarTitle.icon` 与 `navbarTitle.text` 两行，`mode` 仍为 `text-icon`；头像 3074 字节 | 是 |
 | 2026-11-12 | 8 篇模板演示文章全部译为中文：正文、标题、摘要、标签、分类一起译；代码块、代码示例、Mermaid/PlantUML 图源、图片路径、组件导入、`alias` 等原样保留（图源里的英文标签属于代码，未动） | `src/content/posts/` 下 9 个文件（含 `guide/index.md`） | 自写静态校验脚本跑通：9 个文件 frontmatter 闭合、代码围栏开闭配对、`:::` 容器指令开闭配对、可见图片引用（含 `public` 绝对路径与相对路径）全部存在；已排除代码围栏与缩进代码块内的示例路径 | 是 |
 | 2026-11-12 | 顶栏与中文化的上线复核 | 无代码改动 | 首页 `<title>` = `LeafNekoの小窝 - 你可以在这逛逛`，顶栏头像 `/assets/home/avatar.webp` 返回 HTTP 200（3074 字节）；7 篇文章页（image-grid-demo / content-pipeline-fixture / markdown-extended / encrypted-example / video / guide / markdown-mermaid）全部 HTTP 200；`markdown-tutorial` 页生成中文锚点 `id="块级元素"`、`id="段落与换行"`，目录链接 `href="#块级元素"` 对得上；MDX 实时表达式输出「这里的实时表达式会算出 3 个主题：组件、表达式、扩展 Markdown。」；图片网格渲染出 `class="image-grid"` 且图注为中文；归档页中文分类可访问 | 否（仅记录） |
+| 2026-11-12 | 修切页「一瞬间无样式」闪烁：根因是 `cssCodeSplit: true` 让每个路由拆出不同的 CSS 集合（实测首页/归档 11 个、文章页 15 个），Swup 切换时更新 head 会先移除旧样式表再插入新的，中间出现无样式画面。改为 `cssCodeSplit: false`，全站共用同一组样式 | `astro.config.mjs` | 本地 `astro build` 后按页面分组统计：26 个页面引用完全相同的 `style.BHrotYVy.css` + `style.CnnGUsxZ.css`（合计 400882 字节），仅独立的 `pio/live2d-host.html` 无外链样式；改动前同类统计为 11 个 vs 15 个不一致 | 是 |
+| 2026-11-12 | 顶栏头像改圆形：图标 `img` 的 `object-contain` 换为 `rounded-full object-cover`（png 兜底分支与普通分支共 2 处） | `src/components/organisms/navigation/Navbar.astro` | 构建产物 `dist/index.html` 中确认输出 `class="h-[1.75rem] w-[1.75rem] mr-2 rounded-full object-cover"` | 是 |
+| 2026-11-12 | 本地开发依赖补齐：`corepack` 启用 pnpm 11.5.3，`pnpm install --frozen-lockfile` 完成（4 分 52 秒）。注意 pnpm 全局 store 位于 `C:\Users\leafn\AppData\Local\pnpm\store`（工作区外，已获用户口头授权） | `node_modules/`（未入库） | `pnpm exec astro build` 跑通，产出 27 个 HTML；收尾阶段被宿主「批量删除保护」拦在 `dist/.prerender` 清理处，属本机工具链限制，故本地 `dist` 缺 sitemap；线上 `/sitemap-index.xml`、`/sitemap-0.xml` 均返回 200，生产构建不受影响 | 否（仅本地环境） |

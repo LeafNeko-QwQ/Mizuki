@@ -351,8 +351,10 @@ export default defineConfig({
 		build: {
 			// 静态资源处理优化，防止小图片转 base64 导致 HTML 体积过大
 			assetsInlineLimit: 4096,
-			// CSS 代码分割
-			cssCodeSplit: true,
+			// CSS 代码分割：关闭。开启时每个路由会拆出不同的 CSS 文件集合，
+			// Swup 切换页面更新 head 时会先移除旧样式表再插入新的，造成「一瞬间无样式」的闪烁；
+			// 合并成单一文件后所有页面引用同一份 CSS，head 无需替换样式表。
+			cssCodeSplit: false,
 			cssMinify: "esbuild",
 			// 内联小型 CSS 文件以减少网络请求
 			inlineStylesheets: "auto",
