@@ -19,6 +19,7 @@
 3. **改完代码由我 commit + push 到 GitHub（origin/master）**，Cloudflare Pages 监听 Git 自动重建，生效有延迟，不保证立刻可见。
 4. 不顺手改无关文件、不重构没坏的东西、不删除用户内容。
 5. 不提交任何密钥/凭据；`.env` 不入库。
+6. **只改用户点名要改的地方。** 用户没有明确说的，一律不动，包括「顺手看起来更好」的调整；确有必要动别处，先说明再等明确答复。
 
 ---
 
@@ -77,6 +78,7 @@
 - 社交链接：GitHub / Bilibili / 邮箱，三个，其余模板链接删除。
 - 导航栏（`navBarConfig.ts`）、演示文章（`src/content/posts/`）、特色页开关（`siteConfig.featurePages`）：用户明确要求**暂不动**，保持原样。
 - 遗留可见项：`siteConfig.navbarTitle.text` 仍是 `MizukiUI`（顶栏文字），属导航栏区域，按「暂不动」未改。
+- **追加更正（同日）**：站点标题最终定为 **`LeafNekoの小窝`**，副标题 **`你可以在这逛逛`**，由用户明确指定，覆盖上面临时的 `LeafNeko` / `没实力喵事个fvv`。同时新增铁律第 6 条：只改用户点名的地方。
 
 ---
 
@@ -90,3 +92,4 @@
 | 2026-11-12 | 个人资料改为真实身份：昵称 `LeafNeko`；简介按用户原文整理为 `没实力喵事个fvv · 生产日期 2010-10 · 爱玩音游 / DIY / 刷机 / 编程喵`；社交链接替换为 GitHub / Bilibili / Email 三条，删除模板的 Gitee、Codeberg、Discord | `src/config/profileConfig.ts` | 同上方式实际加载模块，输出 `LeafNeko \| GitHub/Bilibili/Email`；Bilibili 补全 `https://` 前缀，邮箱用 `mailto:` | 是（随本次提交） |
 | 2026-11-12 | 用户提供的头像（289×289 JPEG）转为 webp（quality 92）覆盖模板头像 | `src/assets/images/avatar.webp` | 文件大小 18734 字节，尺寸一致；`profileConfig.avatar` 路径未变，引用链无需改动 | 是（随本次提交） |
 | 2026-11-12 | 上线复核：抓取 `https://leafneko.cc.cd/` 原始 HTML 逐项核对（非只看构建成功） | 无代码改动 | `<title>` = `LeafNeko - 没实力喵事个fvv`；头像 `/_astro/avatar.Dq6xi_qW_Z16ydMs.webp` 返回 HTTP 200（13572 字节）；GitHub / Bilibili 链接 href 正确；简介全文含「生产日期 2010-10 · 爱玩音游 / DIY / 刷机 / 编程喵」。邮箱链接被 Cloudflare 侧改写为 `/cdn-cgi/l/email-protection#…`（Cloudflare 邮箱混淆，浏览器端自行还原），非站点问题 | 否（仅记录） |
+| 2026-11-12 | 用户定稿站点标题与副标题，覆盖上一版临时值；同次把「只改用户点名的地方」写进铁律第 6 条 | `src/config/siteConfig.ts`、`docs/ENGINEERING_LOG.md` | `node --experimental-strip-types` 实际加载模块，输出 `LeafNekoの小窝 \| 你可以在这逛逛`；除这两行外无其它改动 | 是（随本次提交） |
