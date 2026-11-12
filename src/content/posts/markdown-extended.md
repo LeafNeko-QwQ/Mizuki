@@ -1,79 +1,79 @@
 ---
-title: Markdown Extended Features
+title: Markdown 扩展语法
 published: 2024-05-01
 updated: 2026-07-30
-description: 'GitHub cards, callouts, code groups, Wiki Links, image grids, PlantUML, and other enhanced Markdown features in Mizuki.'
+description: 'Mizuki 里的 GitHub 卡片、提示块、代码组、Wiki 链接、图片网格、PlantUML 等增强 Markdown 特性。'
 image: ''
-tags: [Demo, Example, Markdown, Mizuki]
-category: 'Examples'
+tags: [演示, 示例, Markdown, Mizuki]
+category: '示例'
 draft: false 
 ---
 
-## GitHub Repository Cards
-You can add dynamic cards that link to GitHub repositories, on page load, the repository information is pulled from the GitHub API. 
+## GitHub 仓库卡片
+可以插入链接到 GitHub 仓库的动态卡片，页面加载时会从 GitHub API 拉取仓库信息。
 
 ::github{repo="LyraVoid/Mizuki"}
 
-Create a GitHub repository card with the code `::github{repo="LyraVoid/Mizuki"}`.
+用 `::github{repo="LyraVoid/Mizuki"}` 这段代码就能生成一张 GitHub 仓库卡片。
 
 ```markdown
 ::github{repo="LyraVoid/Mizuki"}
 ```
 
-## Admonitions
+## 提示块（Admonitions）
 
-Following types of admonitions are supported: `note` `tip` `important` `warning` `caution`
+支持以下类型：`note` `tip` `important` `warning` `caution`
 
 :::note
-Highlights information that users should take into account, even when skimming.
+强调用户即使只是扫一眼也该注意的信息。
 :::
 
 :::tip
-Optional information to help a user be more successful.
+帮助用户更顺利完成事情的补充信息。
 :::
 
 :::important
-Crucial information necessary for users to succeed.
+用户要成功所必需的关键信息。
 :::
 
 :::warning
-Critical content demanding immediate user attention due to potential risks.
+因存在潜在风险而需要用户立即注意的内容。
 :::
 
 :::caution
-Negative potential consequences of an action.
+某个操作可能带来的负面后果。
 :::
 
-### Basic Syntax
+### 基本语法
 
 ```markdown
 :::note
-Highlights information that users should take into account, even when skimming.
+强调用户即使只是扫一眼也该注意的信息。
 :::
 
 :::tip
-Optional information to help a user be more successful.
+帮助用户更顺利完成事情的补充信息。
 :::
 ```
 
-### Custom Titles
+### 自定义标题
 
-The title of the admonition can be customized.
+提示块的标题可以自定义。
 
-:::note[MY CUSTOM TITLE]
-This is a note with a custom title.
+:::note[我的自定义标题]
+这是一条使用自定义标题的提示。
 :::
 
 ```markdown
-:::note[MY CUSTOM TITLE]
-This is a note with a custom title.
+:::note[我的自定义标题]
+这是一条使用自定义标题的提示。
 :::
 ```
 
-### GitHub Syntax
+### GitHub 写法
 
 > [!TIP]
-> [The GitHub syntax](https://github.com/orgs/community/discussions/16925) is also supported.
+> 也支持 [GitHub 的提示写法](https://github.com/orgs/community/discussions/16925)。
 
 ```
 > [!NOTE]
@@ -83,21 +83,19 @@ This is a note with a custom title.
 > The GitHub syntax is also supported.
 ```
 
-### Spoiler
+### 遮罩（Spoiler）
 
-You can add spoilers to your text. The text also supports **Markdown** syntax.
+可以给文字加遮罩，遮罩内容同样支持 **Markdown** 语法。
 
-The content :spoiler[is hidden **ayyy**]!
+内容 :spoiler[被藏起来了 **嘿嘿**]！
 
 ```markdown
-The content :spoiler[is hidden **ayyy**]!
+内容 :spoiler[被藏起来了 **嘿嘿**]！
 ```
 
-## Code Groups
+## 代码组
 
-Use VitePress-style `::: code-group labels=[...]` syntax to present related
-examples as accessible tabs. Tabs support mouse input and the
-<kbd>Left</kbd>, <kbd>Right</kbd>, <kbd>Home</kbd>, and <kbd>End</kbd> keys.
+用 VitePress 风格的 `::: code-group labels=[...]` 语法，把几段相关示例做成可切换的标签页。标签页支持鼠标操作，也支持键盘的 <kbd>Left</kbd>、<kbd>Right</kbd>、<kbd>Home</kbd>、<kbd>End</kbd>。
 
 ::: code-group labels=[TypeScript, Shell, Collapsed]
 
@@ -135,10 +133,9 @@ pnpm build
 :::
 ````
 
-### Automatic Long-Code Collapse
+### 长代码自动折叠
 
-Code blocks longer than the configured threshold are collapsed automatically.
-Authors can continue using `collapse={...}` to fold selected line ranges.
+超过设定行数的代码块会自动折叠。作者仍可以用 `collapse={...}` 指定要折叠的行范围。
 
 ```text
 01
@@ -165,19 +162,17 @@ Authors can continue using `collapse={...}` to fold selected line ranges.
 22
 ```
 
-## Extended Callouts
+## 扩展提示写法
 
-In addition to GitHub's five alert types, Mizuki accepts common Obsidian
-aliases such as `INFO`, `TODO`, `SUCCESS`, `QUESTION`, `DANGER`, `BUG`,
-`EXAMPLE`, and `QUOTE`.
+除了 GitHub 的五种提示类型，Mizuki 还接受 Obsidian 里常见的别名，例如 `INFO`、`TODO`、`SUCCESS`、`QUESTION`、`DANGER`、`BUG`、`EXAMPLE`、`QUOTE`。
 
-> [!BUG] Known limitation
-> Extended aliases are mapped to Mizuki's semantic callout styles.
+> [!BUG] 已知限制
+> 扩展别名会映射到 Mizuki 对应的语义样式。
 
-Python Markdown and Docusaurus-style directives are supported as well:
+Python Markdown 和 Docusaurus 风格的指令写法同样可用：
 
-:::danger[Danger directive]
-This directive uses a custom title.
+:::danger[危险指令]
+这条指令使用了自定义标题。
 :::
 
 ```markdown
@@ -189,20 +184,15 @@ This directive uses a custom title.
 :::
 ```
 
-## Wiki Links
+## Wiki 链接
 
-Obsidian-style Wiki Links resolve article paths, aliases, and heading anchors.
-A standalone link becomes an article card:
+Obsidian 风格的 Wiki 链接可以解析文章路径、别名和标题锚点。单独占一行的链接会变成一张文章卡片：
 
 [[guide]]
 
-Cards reuse the target post cover. Relative covers are resolved from the target
-post, while public, remote, and configured `image: api` covers are also
-supported. Encrypted posts never expose their cover in previews.
+卡片复用目标文章的封面。相对封面以目标文章所在目录解析，也支持 `public` 目录、网络图片和 `image: api` 配置的封面。加密文章不会在预览里暴露封面。
 
-Inline links stay inline. See
-[[markdown-mermaid|the Mermaid examples]], or link directly to
-[[markdown-mermaid#Flowchart Example|a section]].
+行内链接保持行内。比如看 [[markdown-mermaid|Mermaid 的那些示例]]，或者直接跳到 [[markdown-mermaid#Flowchart Example|某一节]]。
 
 ```markdown
 [[markdown-mermaid]]
@@ -210,22 +200,17 @@ Inline links stay inline. See
 See [[markdown-mermaid|the Mermaid examples]].
 ```
 
-## Markdown Images
+## Markdown 图片
 
-Image alt text remains available to assistive technology. A Markdown title is
-shown as the visible caption, and an optional validated `w-N%` token controls
-the display width:
+图片的 alt 文本依然会提供给辅助技术。Markdown 的 title 会显示为可见的图注，另外可用 `w-N%` 控制显示宽度（会校验）：
 
-![Caption example w-60%](/images/demos/image-grid-demo/square-3.webp "A visible image caption")
+![图注示例 w-60%](/images/demos/image-grid-demo/square-3.webp "一段可见的图片说明")
 
 ```markdown
 ![Descriptive alt w-60%](./image.webp "A visible image caption")
 ```
 
-Only widths from `w-1%` through `w-100%` are accepted. Remote image hosts in
-`imageOptimization.noReferrerDomains` receive `referrerpolicy="no-referrer"`
-in the initial HTML. Add `data-no-enhance` to a raw HTML image or ancestor when
-custom markup should be left alone.
+只接受 `w-1%` 到 `w-100%` 之间的宽度。`imageOptimization.noReferrerDomains` 里的远程图床会在首屏 HTML 中带上 `referrerpolicy="no-referrer"`。如果某段原始 HTML 图片要保持自己的写法不被处理，给它或它的祖先加上 `data-no-enhance`。
 
 ```html
 <div data-no-enhance>
@@ -233,14 +218,12 @@ custom markup should be left alone.
 </div>
 ```
 
-## Automatic Image Grids
+## 自动图片网格
 
-Two or more adjacent standalone images are grouped into a responsive gallery.
-Explicit `:::grid` directives remain available when custom columns, aspect
-ratio, or object fitting are required.
+两张或更多相邻的独立图片会自动组成响应式画廊。需要自定义列数、比例或填充方式时，仍可用显式的 `:::grid` 指令。
 
-![Square demo 1](/images/demos/image-grid-demo/square-1.webp)
-![Square demo 2](/images/demos/image-grid-demo/square-2.webp)
+![方形演示图 1](/images/demos/image-grid-demo/square-1.webp)
+![方形演示图 2](/images/demos/image-grid-demo/square-2.webp)
 
 ```markdown
 ![First image](/images/first.webp)
@@ -249,9 +232,7 @@ ratio, or object fitting are required.
 
 ## PlantUML
 
-PlantUML fences generate SVG diagrams through the configured server. Diagrams
-support light and dark sources, zooming, dragging, resetting, and fullscreen
-viewing.
+PlantUML 代码块会通过配置好的服务端生成 SVG 图。图表支持亮色/暗色两套源、缩放、拖动、复位和全屏查看。
 
 ```plantuml
 @startuml
@@ -269,9 +250,9 @@ Alice -> Bob: Hello
 ```
 ````
 
-## Chemistry
+## 化学式
 
-The KaTeX `mhchem` extension renders chemical equations:
+KaTeX 的 `mhchem` 扩展可以渲染化学方程式：
 
 $$
 \ce{H2O + CO2 -> H2CO3}
