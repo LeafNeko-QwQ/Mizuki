@@ -69,6 +69,15 @@
 4. **`siteURL`**：改为 `https://leafneko.cc.cd/`（需带结尾斜杠）——等你确认后改。
 5. **`deploy.yml`**：保持休眠、还是删掉/改分支，避免以后误推。
 
+### 已落实（2026-11-12，用户当面答复）
+
+- 署名 / 昵称：**LeafNeko**。
+- 站点标题：**LeafNeko**；副标题：**没实力喵事个fvv**（取自用户自述简介，非编造）。用户对「站点标题/副标题是什么」的概念未展开，此处按用户自述材料填，若需改只要一句话。
+- 简介与头像：intro 按用户原文整理；头像由用户提供图片转为 webp 覆盖模板头像。
+- 社交链接：GitHub / Bilibili / 邮箱，三个，其余模板链接删除。
+- 导航栏（`navBarConfig.ts`）、演示文章（`src/content/posts/`）、特色页开关（`siteConfig.featurePages`）：用户明确要求**暂不动**，保持原样。
+- 遗留可见项：`siteConfig.navbarTitle.text` 仍是 `MizukiUI`（顶栏文字），属导航栏区域，按「暂不动」未改。
+
 ---
 
 ## 5. 变更记录
@@ -77,3 +86,6 @@
 | --- | --- | --- | --- | --- |
 | 2026-11-12 | 接手勘察：读 package.json / astro.config.mjs / 各 config / 部署文档 / 工作流，确认技术栈、部署链、站点身份现状；建立本工程日志 | `docs/ENGINEERING_LOG.md`（新增） | 文件已写入；勘察结论均来自实际读取的文件与 `git` 输出 | 是（随本次提交） |
 | 2026-11-12 | 把站点基址从模板演示域名改为用户提供的正式域名 `https://leafneko.cc.cd/`（带结尾斜杠，Astro `site` 要求） | `src/config/siteConfig.ts` | 静态核对：`siteURL` 全仓仅被 `astro.config.mjs`（`site`、sitemap）与 `src/pages/posts/[...slug].astro`、`src/pages/[...permalink].astro` 引用，替换为等长字符串不改变结构；**本地未 build**（`node_modules` 不存在），构建结果由 Cloudflare 侧验证 | 是（随本次提交） |
+| 2026-11-12 | 站点标题 `Mizuki`→`LeafNeko`、副标题 `One demo website`→`没实力喵事个fvv`（用户自述原话，未编造） | `src/config/siteConfig.ts` | `node --experimental-strip-types` 实际加载模块，输出 `LeafNeko \| 没实力喵事个fvv \| https://leafneko.cc.cd/`，语法与导出均正常 | 是（随本次提交） |
+| 2026-11-12 | 个人资料改为真实身份：昵称 `LeafNeko`；简介按用户原文整理为 `没实力喵事个fvv · 生产日期 2010-10 · 爱玩音游 / DIY / 刷机 / 编程喵`；社交链接替换为 GitHub / Bilibili / Email 三条，删除模板的 Gitee、Codeberg、Discord | `src/config/profileConfig.ts` | 同上方式实际加载模块，输出 `LeafNeko \| GitHub/Bilibili/Email`；Bilibili 补全 `https://` 前缀，邮箱用 `mailto:` | 是（随本次提交） |
+| 2026-11-12 | 用户提供的头像（289×289 JPEG）转为 webp（quality 92）覆盖模板头像 | `src/assets/images/avatar.webp` | 文件大小 18734 字节，尺寸一致；`profileConfig.avatar` 路径未变，引用链无需改动 | 是（随本次提交） |
