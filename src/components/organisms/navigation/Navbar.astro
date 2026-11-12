@@ -225,6 +225,19 @@ function loadButtonScript() {
         };
     }
 
+    // 点面板里的链接时立刻收起抽屉。
+    // 抽屉是 fixed 定位、不在 Swup 的替换容器里，导航后它会压在新页面上，
+    // 造成「新页面已经切换、菜单还盖着」的割裂画面。
+    let menuPanelForClose = document.getElementById("nav-menu-panel");
+    if (menuPanelForClose) {
+        menuPanelForClose.addEventListener("click", function (event) {
+            const target = event.target;
+            if (target instanceof Element && target.closest("a")) {
+                menuPanelForClose.classList.add("float-panel-closed");
+            }
+        });
+    }
+
     document.addEventListener("click", function(event) {
         const panels = ["display-setting", "nav-menu-panel"];
         const buttons = ["display-settings-switch", "nav-menu-switch"];
