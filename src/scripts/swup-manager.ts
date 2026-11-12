@@ -241,3 +241,42 @@ export async function initSwupManager(): Promise<void> {
 	const manager = getSwupManager();
 	await manager.init();
 }
+
+/**
+ * 过渡状态兜底（watchdog）
+ *
+ * Swup 在 <html> 上挂 is-changing / is-leaving / is-animating 来控制过渡，
+ * 而 `.transition-main` 处于这些状态时是 opacity: 0。只要有一次「过渡结束」事件没触发
+ * （慢网络下资源没到、目标页结构差异、脚本异常都可能），页面就会停在
+ * 「有结构但看不见」的空白状态——这正是手机上切分区时看到的空白页。
+ *
+ * 这里在每次点击链接后做一次延时检查：900ms 后状态类还在，就手动摘掉，
+ * 保证内容一定会显示出来。它只删除过渡状态类，不改动任何布局、内容或动画定义。
+ */
+const TRANSITION_STATE_CLASSES = ["is-changing", "is-leaving", "is-animating"];
+
+function releaseStuckTransition() {
+	const root = document.documentElement;
+	if (!root.classList.contains("is-animating")) {
+		return;
+	}
+	root.classList.remove(...TRANSITION_STATE_CLASSES);
+}
+
+function scheduleTransitionWatchdog() {
+	window.setTimeout(releaseStuckTransition, 900);
+}
+
+if (typeof window !== "undefined") {
+	document.addEventListener(
+		"click",
+		(event) => {
+			const target = event.target;
+			if (target instanceof Element && target.closest("a")) {
+				scheduleTransitionWatchdog();
+			}
+		},
+		true,
+	);
+	window.addEventListener("pageshow", scheduleTransitionWatchdog);
+}
