@@ -79,6 +79,7 @@
 - 导航栏（`navBarConfig.ts`）、演示文章（`src/content/posts/`）、特色页开关（`siteConfig.featurePages`）：用户明确要求**暂不动**，保持原样。
 - 遗留可见项：`siteConfig.navbarTitle.text` 仍是 `MizukiUI`（顶栏文字），属导航栏区域，按「暂不动」未改。
 - **追加更正（同日）**：站点标题最终定为 **`LeafNekoの小窝`**，副标题 **`你可以在这逛逛`**，由用户明确指定，覆盖上面临时的 `LeafNeko` / `没实力喵事个fvv`。同时新增铁律第 6 条：只改用户点名的地方。
+- **日语部分保留（用户 2026-11-12 明确指示）**：首页大标题「わたしの部屋」、日文轮播副标题、TOC 假名标记等日文内容**属于本站设计的一部分，不得翻译或替换**。这一条对后续所有改动持续有效。
 
 ---
 
@@ -96,3 +97,4 @@
 | 2026-11-12 | 标题定稿上线复核 | 无代码改动 | 推送后约 3 分钟抓取线上首页：`<title>` = `LeafNekoの小窝 - 你可以在这逛逛`，`og:site_name` = `LeafNekoの小窝` | 否（仅记录） |
 | 2026-11-12 | 顶栏品牌区换成用户自己的：图标改为头像，文字改为站点标题。头像另存 96×96 版本到 `public/`（`navbarTitle.icon` 走 `url()` 解析，只认 `public` 目录，`src/assets` 里的图片拿不到） | `src/config/siteConfig.ts`、`public/assets/home/avatar.webp`（新增） | 只改 `navbarTitle.icon` 与 `navbarTitle.text` 两行，`mode` 仍为 `text-icon`；头像 3074 字节 | 是 |
 | 2026-11-12 | 8 篇模板演示文章全部译为中文：正文、标题、摘要、标签、分类一起译；代码块、代码示例、Mermaid/PlantUML 图源、图片路径、组件导入、`alias` 等原样保留（图源里的英文标签属于代码，未动） | `src/content/posts/` 下 9 个文件（含 `guide/index.md`） | 自写静态校验脚本跑通：9 个文件 frontmatter 闭合、代码围栏开闭配对、`:::` 容器指令开闭配对、可见图片引用（含 `public` 绝对路径与相对路径）全部存在；已排除代码围栏与缩进代码块内的示例路径 | 是 |
+| 2026-11-12 | 顶栏与中文化的上线复核 | 无代码改动 | 首页 `<title>` = `LeafNekoの小窝 - 你可以在这逛逛`，顶栏头像 `/assets/home/avatar.webp` 返回 HTTP 200（3074 字节）；7 篇文章页（image-grid-demo / content-pipeline-fixture / markdown-extended / encrypted-example / video / guide / markdown-mermaid）全部 HTTP 200；`markdown-tutorial` 页生成中文锚点 `id="块级元素"`、`id="段落与换行"`，目录链接 `href="#块级元素"` 对得上；MDX 实时表达式输出「这里的实时表达式会算出 3 个主题：组件、表达式、扩展 Markdown。」；图片网格渲染出 `class="image-grid"` 且图注为中文；归档页中文分类可访问 | 否（仅记录） |
