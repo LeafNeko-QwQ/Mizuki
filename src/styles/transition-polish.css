@@ -1,0 +1,30 @@
+/**
+ * 过渡观感增强（在 transition.css 之后加载，用它覆盖基础过渡的位移方式）
+ *
+ * 只做两件事：
+ * 1. 离开时加一点纵深：轻微缩小 + 极轻的模糊，形成「退后一层」的感觉；
+ * 2. 进入时先略小一点再落位，比纯位移更有层次。
+ *
+ * 全部包在 prefers-reduced-motion: no-preference 里，系统开启「减少动态效果」时不生效。
+ */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 离开：向上退场，同时缩小并轻微虚化 */
+  html.is-animating.is-leaving .transition-leaving,
+  html.is-animating.is-leaving .transition-main {
+    transform: translateY(calc(var(--transition-translate) * -1)) scale(0.985);
+    opacity: 0;
+    filter: blur(2px);
+  }
+
+  /* 进入前：略小 + 下移，落位时有「浮上来」的手感 */
+  html.is-animating .transition-main {
+    transform: translateY(var(--transition-translate)) scale(0.99);
+  }
+
+  /* 落位后清掉模糊，避免残留 */
+  html:not(.is-animating) .transition-main,
+  html:not(.is-animating) .transition-leaving {
+    filter: none;
+  }
+}

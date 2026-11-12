@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
 	title: "LeafNekoの小窝",
 	subtitle: "你可以在这逛逛",
 	siteURL: "https://leafneko.cc.cd/", // 请替换为你的站点URL，以斜杠结尾
-	siteStartDate: "2025-01-01", // 站点开始运行日期，用于站点统计组件计算运行天数
+	siteStartDate: "2026-11-12", // 站点开始运行日期，用于站点统计组件计算运行天数
 	timeZone: "Asia/Shanghai", // 文章日期使用的 IANA 时区，可改为 Asia/Tokyo、Europe/Berlin 等
 
 	lang: SITE_LANG,

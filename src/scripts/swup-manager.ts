@@ -3,6 +3,8 @@
  * 协调所有子模块，提供统一的页面过渡管理
  */
 
+import SwupScrollPlugin from "@swup/scroll-plugin";
+
 import { widgetConfigs } from "../config";
 import { initLinkPreloading } from "../utils/navigation-utils";
 import { SWUP_SELECTORS } from "./core/swup-config";
@@ -12,6 +14,30 @@ import {
 	destroyTransitionEffect,
 	getTransitionEffect,
 } from "./effects/transition-effect";
+
+/**
+ * 开启跨页滚动的连续性：切到新页面时平滑回到顶部，浏览器前进/后退时恢复原来的滚动位置。
+ *
+ * Astro 集成没有暴露 plugins 入口，这里在 Swup 就绪后手动挂载官方 Scroll Plugin。
+ * 挂载失败时不做任何事，页面继续用 Swup 默认的滚动方式，不会因此中断导航。
+ */
+function enableScrollContinuity() {
+	const swup = (
+		window as unknown as { swup?: { use?: (plugin: unknown) => void } }
+	).swup;
+	if (!swup || typeof swup.use !== "function") return;
+
+	try {
+		swup.use(
+			new SwupScrollPlugin({
+				animateScroll: true,
+				doScrollingRightAway: false,
+			}),
+		);
+	} catch {
+		// 忽略：保持 Swup 默认滚动行为
+	}
+}
 import type { BackToTopHandler } from "./handlers/back-to-top-handler";
 import {
 	getBackToTopHandler,
@@ -124,12 +150,14 @@ export class SwupManager {
 
 		// 如果 Swup 已经就绪，直接设置钩子
 		if (window?.swup?.hooks) {
+			enableScrollContinuity();
 			initFancybox();
 			checkKatex();
 			this.hooksManager.registerHooks();
 		} else {
 			// 监听 Swup 就绪事件
 			document.addEventListener("swup:enable", () => {
+				enableScrollContinuity();
 				if (this.hooksManager) {
 					this.hooksManager.registerHooks();
 				}
