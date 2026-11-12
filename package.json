@@ -96,6 +96,7 @@
     "@types/sanitize-html": "^2.16.1",
     "fast-xml-parser": "5.10.1",
     "fonteditor-core": "^2.6.3",
+    "fontmin": "^1.1.1",
     "glob": "^13.0.6",
     "hast-util-from-html": "2.0.3",
     "postcss-import": "^16.1.1",
