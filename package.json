@@ -20,6 +20,8 @@
     "type-check": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/markdown-enhancements.test.mjs tests/layout-regressions.test.mjs tests/image-loading.test.mjs tests/music-player-loading.test.mjs && node tests/crypto.test.mjs",
     "prepare-fonts": "node scripts/prepare-fonts.mjs",
+    "ui-check": "node scripts/ui-check.mjs",
+    "ui-check:slow": "node scripts/ui-slow-check.mjs",
     "check-fonts": "node scripts/check-font-loading.mjs",
     "prepare-images": "node scripts/prepare-default-images.mjs",
     "new-post": "node scripts/new-post.js",
@@ -98,6 +100,7 @@
     "fonteditor-core": "^2.6.3",
     "glob": "^13.0.6",
     "hast-util-from-html": "2.0.3",
+    "playwright-core": "^1.65.0",
     "postcss-import": "^16.1.1",
     "postcss-nesting": "^14.0.0"
   },

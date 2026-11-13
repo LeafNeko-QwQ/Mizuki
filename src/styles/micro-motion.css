@@ -55,3 +55,45 @@
 #post-list-container .card-base.onload-animation {
   animation-delay: calc(var(--i, 0) * var(--interval, 50ms));
 }
+
+/**
+ * 慢网络下切页不要「先白屏、再等新页面」。
+ *
+ * Swup 在 visit 一开始就把 .transition-main 淡出（opacity: 0），
+ * 但新页面的 HTML 要等网络回来才替换。两者之间的空档在慢网络上会拉得很长，
+ * 表现就是「点一下，页面白掉，过好几秒才出现」。
+ *
+ * 这里的做法：切页后 180ms 内还没换上新内容，就把旧页面按住不放（保持可见），
+ * 等内容真正替换时再放手。快网络下 180ms 内已经换完，这条规则不会生效，
+ * 原有过渡动画不受影响。
+ */
+html.is-fetch-hold .transition-main {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+html.is-fetch-hold .transition-leaving {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/**
+ * 慢网络下切页不要「先白屏、再等新页面」。
+ *
+ * Swup 在 visit 一开始就把 .transition-main 淡出（opacity: 0），
+ * 但新页面的 HTML 要等网络回来才替换。两者之间的空档在慢网络上会拉得很长，
+ * 表现就是「点一下，页面白掉，过好几秒才出现」。
+ *
+ * 这里的做法：切页后 180ms 内还没换上新内容，就把旧页面按住不放（保持可见），
+ * 等内容真正替换时再放手。快网络下 180ms 内已经换完，这条规则不会生效，
+ * 原有过渡动画不受影响。
+ */
+html.is-fetch-hold .transition-main {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+html.is-fetch-hold .transition-leaving {
+  opacity: 1 !important;
+  transform: none !important;
+}

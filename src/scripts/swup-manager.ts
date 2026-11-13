@@ -253,6 +253,14 @@ export async function initSwupManager(): Promise<void> {
  * 这里在每次点击链接后做一次延时检查：900ms 后状态类还在，就手动摘掉，
  * 保证内容一定会显示出来。它只删除过渡状态类，不改动任何布局、内容或动画定义。
  */
+type SwupHooksLike = {
+	hooks?: { on: (event: string, cb: () => void) => void };
+};
+
+type SwupHooksLike = {
+	hooks?: { on: (event: string, cb: () => void) => void };
+};
+
 const TRANSITION_STATE_CLASSES = ["is-changing", "is-leaving", "is-animating"];
 
 function releaseStuckTransition() {
@@ -267,7 +275,52 @@ function scheduleTransitionWatchdog() {
 	window.setTimeout(releaseStuckTransition, 900);
 }
 
+/**
+ * 慢网络切页保持旧内容可见
+ *
+ * 与 micro-motion.css 里的 html.is-fetch-hold 配合：切页 180ms 后仍未换上新内容，
+ * 就按住旧页面（保持可见），等 content:replace 时再放手，避免长时间白屏。
+ * 快网络下 180ms 内已经完成替换，这段逻辑不产生任何视觉效果。
+ */
+function installSlowNavigationHold() {
+	let holdTimer = 0;
+	const root = document.documentElement;
+
+	const release = () => {
+		window.clearTimeout(holdTimer);
+		root.classList.remove("is-fetch-hold");
+	};
+
+	const attach = (): boolean => {
+		const swup = (window as unknown as { swup?: SwupHooksLike }).swup;
+		if (!swup?.hooks?.on) {
+			return false;
+		}
+		swup.hooks.on("visit:start", () => {
+			window.clearTimeout(holdTimer);
+			holdTimer = window.setTimeout(() => {
+				root.classList.add("is-fetch-hold");
+			}, 180);
+		});
+		swup.hooks.on("content:replace", release);
+		swup.hooks.on("visit:end", release);
+		return true;
+	};
+
+	if (attach()) {
+		return;
+	}
+	let tries = 0;
+	const timer = window.setInterval(() => {
+		tries += 1;
+		if (attach() || tries > 30) {
+			window.clearInterval(timer);
+		}
+	}, 100);
+}
+
 if (typeof window !== "undefined") {
+	installSlowNavigationHold();
 	document.addEventListener(
 		"click",
 		(event) => {
