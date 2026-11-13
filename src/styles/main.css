@@ -33,10 +33,25 @@ html {
  * 这条规则原来是无条件生效的：手机会「为不存在（或浮动式）的滚动条」
  * 预留一条宽度，宽度因浏览器而异，表现就是右侧多出一条空白。
  */
-@media (hover: hover) and (pointer: fine) {
+/*
+ * 再加一道宽度门槛：部分安卓/国产浏览器会把触屏设备上报成 hover:hover，
+ * 单靠指针判断不足以排除手机，结果是它们为滚动条预留的那条宽度出现在左侧，
+ * 看起来就是「左边多一条空白」。1280px 以下一律不预留。
+ */
+@media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
   html {
     scrollbar-gutter: stable;
   }
+}
+
+/*
+ * 窄屏横向溢出裁剪：横幅里的波浪是固定宽度的 SVG（800–900px），
+ * 在 360px 以下的设备上会撑出横向滚动条，进而让整页看起来偏了一截。
+ * 用 clip 而不是 hidden，避免额外生成滚动容器。
+ */
+html,
+body {
+  overflow-x: clip;
 }
 
 /* 页面顶部渐变高光效果 */
