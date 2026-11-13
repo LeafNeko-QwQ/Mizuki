@@ -19,7 +19,6 @@ import "../styles/variables.styl";
 import "../styles/main.css";
 import "../styles/banner.css";
 import "../styles/transition.css";
-import "../styles/boot-gate.css";
 import "../styles/widget-responsive.css";
 import "../styles/layout-responsive.css";
 import "../styles/mobile-navbar.css";
@@ -158,38 +157,6 @@ const bannerOffset =
 	data-ultrawide-post={siteConfig.ultrawidePostLayout?.enable ? "true" : "false"}
 >
 	<head>
-		<!--
-			首屏放行闸门：先遮住页面，等资源（含字体）就绪后再一次性显示，
-			避免「先出空框、再填字、再跳字形」的割裂感。
-
-			失败安全：这个类由本脚本自己加上，脚本不执行就不会遮；另有 10 秒兜底，
-			无论后面发生什么都会放行，不会把访客锁在加载页里。
-		-->
-		<script is:inline>
-			(function () {
-				var root = document.documentElement;
-				root.classList.add("is-booting");
-
-				var released = false;
-				function release() {
-					if (released) return;
-					released = true;
-					root.classList.remove("is-booting");
-					root.classList.add("boot-released");
-				}
-
-				window.setTimeout(release, 10000);
-
-				window.addEventListener("load", function () {
-					if (document.fonts && document.fonts.ready) {
-						document.fonts.ready.then(release);
-						window.setTimeout(release, 2500);
-					} else {
-						release();
-					}
-				});
-			})();
-		</script>
 		<meta charset="UTF-8" />
 
         <style is:inline>
@@ -262,13 +229,6 @@ const bannerOffset =
 
 		data-overlayscrollbars-initialize
 	>
-		<!-- 首屏放行闸门的遮罩：只在 html.is-booting 时显示，默认不可见 -->
-		<div id="boot-loader" aria-hidden="true">
-			<div class="boot-loader__inner">
-				<div class="boot-loader__spinner"></div>
-				<p class="boot-loader__text">{siteConfig.title}</p>
-			</div>
-		</div>
 		<noscript
 			><iframe
 				src="https://www.googletagmanager.com/ns.html?id=GTM-KRX3XGVH"
