@@ -45,6 +45,59 @@ html {
 }
 
 /*
+ * 窄屏导航栏放不下：品牌区（头像 + 标题，167px）加上右侧图标区（207px）
+ * 再加左内边距，合计 388px —— 375px 及更窄的机型上最后一个图标会被裁掉一半。
+ * 这里不压缩标题，而是收紧图标区的间距与按钮宽度（44 → 36px），
+ * 把空间还给图标，标题保持完整。
+ */
+@media (width < 420px) {
+  #navbar-actions {
+    gap: 0;
+  }
+
+  #navbar-actions > * {
+    width: 2.25rem;
+    min-width: 2.25rem;
+  }
+}
+
+/* 320px 级小屏：再把左右内边距收一收，给图标腾空间 */
+@media (width < 360px) {
+  #navbar > div {
+    padding-left: 0;
+    padding-right: 0.25rem;
+  }
+
+  #navbar > div > a {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  /* 头像与标题之间的间距也收掉，最后几像素在这里 */
+  #navbar > div > a img {
+    margin-right: 0.25rem;
+  }
+}
+
+/* 320px 级小屏：再把左右内边距收一收，给图标腾空间 */
+@media (width < 360px) {
+  #navbar > div {
+    padding-left: 0;
+    padding-right: 0.25rem;
+  }
+
+  #navbar > div > a {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  /* 头像与标题之间的间距也收掉，最后几像素在这里 */
+  #navbar > div > a img {
+    margin-right: 0.25rem;
+  }
+}
+
+/*
  * 窄屏横向溢出裁剪：横幅里的波浪是固定宽度的 SVG（800–900px），
  * 在 360px 以下的设备上会撑出横向滚动条，进而让整页看起来偏了一截。
  * 用 clip 而不是 hidden，避免额外生成滚动容器。
