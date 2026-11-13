@@ -17,7 +17,11 @@ const CHROME =
 	process.env.CHROME_PATH ||
 	"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
-const browser = await chromium.launch({ executablePath: CHROME });
+const proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY;
+const browser = await chromium.launch({
+	executablePath: CHROME,
+	proxy: proxy ? { server: proxy } : undefined,
+});
 const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 const page = await context.newPage();
 
