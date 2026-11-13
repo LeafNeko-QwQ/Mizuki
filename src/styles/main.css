@@ -26,8 +26,17 @@
 /* 确保平滑滚动，并稳定滚动条宽度以避免布局左右抖动 */
 html {
   scroll-behavior: smooth;
-  /* 现代浏览器：为滚动条预留稳定空间 */
-  scrollbar-gutter: stable;
+}
+
+/*
+ * 只在有真实指针（鼠标 / 触控板）的设备上给滚动条预留空间。
+ * 这条规则原来是无条件生效的：手机会「为不存在（或浮动式）的滚动条」
+ * 预留一条宽度，宽度因浏览器而异，表现就是右侧多出一条空白。
+ */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    scrollbar-gutter: stable;
+  }
 }
 
 /* 页面顶部渐变高光效果 */
